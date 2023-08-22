@@ -26,15 +26,6 @@ export default function PLAnalysis() {
         A subsequent challenge was finding collaborators with analogous technical skills. Our initial approach was the Jaccard similarity, gauging similarity using bigrams from user profiles. Soon, we integrated our previous endeavor - the language matrix. By interpreting languages from user bios, the matrix could then identify users possessing high-scored languages. For instance, a Swift aficionado could collaboratively benefit from an Objective-C coder. This concept, rich in potential, remains a prospect for future exploration.
       </p>
 
-      <div className="p-8">
-        <embed
-          src="/apps/programming/analysis.pdf#view=FitH"
-          type="application/pdf"
-          width="100%"
-          height="500px"  // or however tall you want the PDF viewer to be
-          title="Programming Language Analysis Report"
-        />
-      </div>
     </div>
   );
 }

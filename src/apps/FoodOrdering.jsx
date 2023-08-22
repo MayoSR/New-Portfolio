@@ -4,7 +4,7 @@ export default function FoodOrdering() {
   return (
     <div className="h-full w-full bg-white text-left overflow-y-scroll p-4">
       <h1 className="text-5xl font-bold pb-2 border-b-2 inline-block border-black mb-4">
-        <a href="https://foodordering16.netlify.app" target="_blank" rel="noopener noreferrer">Food Ordering App</a>
+        <a href="https://foodordering16.netlify.app" className="text-blue-800"  target="_blank" rel="noopener noreferrer">Food Ordering Mobile App</a>
       </h1>
       <h1 className="text-5xl font-bold pb-2 border-b-2 inline-block border-black mb-4">
         Red Bull Basement Hackathon

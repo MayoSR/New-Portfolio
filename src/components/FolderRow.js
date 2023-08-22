@@ -1,6 +1,6 @@
 
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signalTopLayer, startAppProcess } from "../actions";
 
 export default function FolderRow(props) {
@@ -14,6 +14,7 @@ export default function FolderRow(props) {
   };
 
   const dispatch = useDispatch();
+  const offsetCalc = useSelector((state) => state.appState).length;
 
   return (
     <tr

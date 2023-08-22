@@ -7,7 +7,7 @@ export default function JobFinder() {
         <a href="https://jobpicker16.netlify.app" target="_blank"> Job Finder App</a>
       </h1>
       <p className="text-lg">
-        The <a  target="_blank" href="https://jobpicker16.netlify.app">app is a simple job searching app</a>. While these apps already exist in
+        The <a  target="_blank" className="text-blue-800"  href="https://jobpicker16.netlify.app">app is a simple job searching app</a>. While these apps already exist in
         some form or the other, they are usually fairly cluttered or not
         isolated experiences. For example,LinkedIn supports job postings, but
         because there's so many other things going on, sometimes the job portion

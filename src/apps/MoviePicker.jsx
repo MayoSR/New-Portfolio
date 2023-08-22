@@ -4,7 +4,7 @@ export default function MoviePicker() {
   return (
     <div className="h-full w-full bg-white text-left overflow-y-scroll p-4">
       <h1 className="text-5xl font-bold pb-2 border-b-2 inline-block border-black mb-4">
-        Movie Picker
+        Movie Picker Mobile App
       </h1>
       <p className="text-lg">
         Have you ever tried to find a movie you wanted to watch with friends?
