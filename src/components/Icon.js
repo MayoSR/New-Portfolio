@@ -64,7 +64,7 @@ export default function Icon(props) {
           {props.app.isDir ? (
             <img src="/icons/folder.png" alt="folder icon" className={props.desktop ? "w-[48px] h-[48px]" : "w-[30px] h-[30px]" } />
           ) : (
-            <img src={props.app.icon} alt="app-icon" className={props.desktop ? "w-[48px] h-[48px]" : "w-[30px] h-[30px]" }  />
+            <img src={props.app.icon} alt="app-icon" className={props.desktop ? "w-[48px] h-[48px]" : "w-[27px] h-[27px] mb-[3px] mt-[1px]" }  />
           )}
 
 

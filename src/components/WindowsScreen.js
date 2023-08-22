@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { BiSearch, BiChevronRight } from "react-icons/bi";
 import { MdOutlinePowerSettingsNew } from "react-icons/md";
 
-export default function WindowsScreen() {
+export default function WindowsScreen(props) {
   let icons = [
     {
       url: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
@@ -193,7 +193,7 @@ export default function WindowsScreen() {
   });
 
   const skillRef = useRef("");
-  const [filterText,setFilterText] = useState("");
+  const [filterText, setFilterText] = useState("");
 
   return (
     <div
@@ -220,26 +220,33 @@ export default function WindowsScreen() {
             <BiChevronRight className="" style={{ marginTop: "2px" }} />
           </div>
         </div>
-        <div className="">
-          
-          <div className="w-[590px] overflow-hidden">
+        <div className="flex items-center">
+          <div className="w-[590px] overflow-hidden ml-4">
             <div className="w-[610px] pr-4 grid grid-cols-6 gap-4 mb-2 text-white mt-12 overflow-y-scroll h-[220px]">
-              {icons.filter(icon => icon.name.toLowerCase().indexOf(filterText) !== -1).map((icon) => {
-                return (
-                  <div
-                    className="flex flex-col justify-center items-center mb-2"
-                    key={icon.name}
-                  >
-                    <img
-                      style={{ height: "35px", width: "35px" }}
-                      src={icon.url}
-                      alt="icon"
-                    />
-                    <p className="text-xs">{icon.name}</p>
-                  </div>
-                );
-              })}
+              {icons
+                .filter(
+                  (icon) => icon.name.toLowerCase().indexOf(filterText) !== -1
+                )
+                .map((icon) => {
+                  return (
+                    <div
+                      className="flex flex-col justify-center items-center mb-2"
+                      key={icon.name}
+                    >
+                      <img
+                        style={{ height: "35px", width: "35px" }}
+                        src={icon.url}
+                        alt="icon"
+                      />
+                      <p className="text-xs">{icon.name}</p>
+                    </div>
+                  );
+                })}
             </div>
+          </div>
+          <div className="flex flex-col items-center gap-2 -ml-2">
+            <div className="h-[6px] w-[6px] bg-slate-300 rounded-full cursor-pointer"></div>
+            <div className="h-[4px] w-[4px] bg-slate-300 rounded-full cursor-pointer"></div>
           </div>
         </div>
         <div className="w-full flex items-center justify-between mt-8 -mb-8 text-sm px-8">
@@ -268,10 +275,20 @@ export default function WindowsScreen() {
         </div>
         <div className="absolute bottom-[32px] px-12 py-4 border-t-2 border-[#252525] p-4 bg-[#272727] left-0 right-0 w-full flex items-center justify-between mt-8 -mb-8 text-sm">
           <div className="flex items-center">
-            <img src="/images/me.jpg" height="32px" width="32px" className="rounded-full "/>
+            <img
+              src="/images/me.jpg"
+              height="32px"
+              width="32px"
+              className="rounded-full "
+            />
             <p className="text-xs text-white ml-3">Mayank Rao</p>
           </div>
-          <MdOutlinePowerSettingsNew className="text-2xl text-white mr-6" />
+          <div className="hover:bg-[rgba(200,200,200,0.14)] rounded-md p-2 mr-6">
+            <MdOutlinePowerSettingsNew
+              onClick={() => props.setScreen(0)}
+              className="text-2xl  text-white"
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -102,7 +102,7 @@ export default function AppWindow(props) {
       </div>
 
       <div
-        className="absolute p-2 top-[40px] left-0 right-0 bottom-0 h-[560px] w-[1000px] bg-[#f9f9f9]"
+        className="absolute p-2 top-[40px] left-0 right-0 bottom-0 h-[560px] w-[1000px] bg-[#f9f9f9]  overflow-y-scroll"
         style={{ borderBottom: "0.5px solid #4d4d4d" }}
       >
         {appData.app}

@@ -18,6 +18,8 @@ import PLAnalysis from "../apps/PLAnalysis";
 import HTMLWireframe from "../apps/HTMLWireframe";
 import BookGenerator from "../apps/BookGenerator";
 import Resume from "../apps/Resume";
+import AboutMe from "../apps/AboutMe";
+import AboutPortfolio from "../apps/AboutPortfolio";
 
 const initialState = [
 
@@ -58,6 +60,7 @@ const initialState = [
     icon: "/icons/gamer.png",
     name: "About Me",
     status: 0,
+    app: <AboutMe />
   },
   {
     id: 202,
@@ -66,6 +69,7 @@ const initialState = [
     icon: "/icons/microsoft.png",
     name: "About this Portfolio",
     status: 0,
+    app: <AboutPortfolio />
   },
   {
     id: 2,

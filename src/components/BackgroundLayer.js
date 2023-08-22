@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Icon from "./Icon";
 import FolderWindow from "./FolderWindow";
 import WindowsScreen from "./WindowsScreen";
 import { throttle } from "lodash";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppWindow from "./AppWindow";
+import { signalTopLayer, startAppProcess } from "../actions";
 
 export default function BackgroundLayer(props) {
   const backgroundImageUrl = 'url("/images/windows-flower.jpg")';
@@ -19,6 +20,8 @@ export default function BackgroundLayer(props) {
   const [draggable, setDraggable] = React.useState(null);
 
   const [initialCursorCoords, setInitialCursorCoords] = React.useState(null);
+
+  const dispatch = useDispatch();
 
   const handleMouseMove = useCallback(
     (event) => {
@@ -35,8 +38,15 @@ export default function BackgroundLayer(props) {
     [draggable, initialCursorCoords]
   );
 
+
+  const [pageLoad,setPageLoad] = useState(false)
+
   useEffect(() => {
     window.addEventListener("mousemove", handleMouseMove);
+    if(!pageLoad){
+      dispatch(startAppProcess({ id: 201, coords: [100, 100] }));dispatch(signalTopLayer(201))
+      setPageLoad(true)
+    }
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
@@ -93,7 +103,7 @@ export default function BackgroundLayer(props) {
           <></>
         )
       )}
-      {windowsScreen && <WindowsScreen />}
+      {windowsScreen && <WindowsScreen setScreen={props.setScreen} />}
     </div>
   );
 }
