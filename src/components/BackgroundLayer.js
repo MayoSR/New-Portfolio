@@ -48,21 +48,24 @@ export default function BackgroundLayer(props) {
       style={{ background: backgroundImageUrl, backgroundSize: "cover" }}
     >
       <div
-        className="grid grid-flow-col h-[90vh] gap-2 mt-1"
-        style={{ gridTemplateRows: "repeat(9, 1fr)" }}
+        className="flex flex-col gap-4 mt-1"
       >
-        {appWindows.map((app) => {
-          return (
-            <Icon
-              key={app.id}
-              iconSelectedController={setSelectedIcon}
-              id={app.id}
-              isSelected={app.id === selectedIcon}
-              appWindows={appWindows}
-              app={app}
-            />
-          );
-        })}
+        {appWindows
+          .sort((a, b) => a.id - b.id)
+          .filter((app) => app.parentDir === 0 || app.isDir)
+          .map((app) => {
+            return (
+              <Icon
+                key={app.id}
+                iconSelectedController={setSelectedIcon}
+                id={app.id}
+                isSelected={app.id === selectedIcon}
+                appWindows={appWindows}
+                app={app}
+                desktop
+              />
+            );
+          })}
       </div>
       <Navbar
         toggleWindowsScreen={toggleWindowsScreen}

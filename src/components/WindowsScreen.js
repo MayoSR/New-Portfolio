@@ -198,7 +198,7 @@ export default function WindowsScreen() {
   return (
     <div
       className="flex justify-center absolute left-0 right-0 bottom-[60px] w-full"
-      style={{ zIndex: 999 }}
+      style={{ zIndex: 999999 }}
     >
       <div className="relative overflow-hidden rounded-md drop-shadow-xl flex flex-col items-center justify-start h-[725px] w-[635px] bg-[#323232] p-8">
         <div

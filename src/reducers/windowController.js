@@ -1,5 +1,5 @@
 const initialState = {
-  currentTopLayer: 99999,
+  currentTopLayer: 999,
   reference: -1,
 };
 

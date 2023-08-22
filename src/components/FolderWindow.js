@@ -30,6 +30,7 @@ import FolderRow from "./FolderRow";
 import { useDispatch, useSelector } from "react-redux";
 import { startAppProcess, stopAppProcess, signalTopLayer } from "../actions";
 
+
 export default function FolderWindow(props) {
   const tempDirFiles = [
     {
@@ -93,9 +94,9 @@ export default function FolderWindow(props) {
       size: "2.9 MB",
     },
   ];
-  
-  let coords = props.app.coords
-  let folderID = props.app.id
+
+  let coords = props.app.coords;
+  let folderID = props.app.id;
 
   const dispatch = useDispatch();
   const { reference, currentTopLayer } = useSelector(
@@ -103,16 +104,24 @@ export default function FolderWindow(props) {
   );
   const ref = useRef(null);
   const [clickState, setClickState] = useState(false);
-  const [isSelected,setIsSelected] = useState(false);
+  const [isSelected, setIsSelected] = useState(false);
+
+  const appChildren = useSelector((state) =>
+    state.appState.filter((app) => app.parentDir === folderID)
+  );
+
+  const appDirs = useSelector(state => state.appState.filter(app => app.isDir))
 
   return (
     <div
       className={`absolute w-[1000px] h-[600px] bg-[#161616] rounded-md drop-shadow-xl overflow-hidden`}
       style={{
         zIndex: reference === folderID ? currentTopLayer : 200,
-        left: `${coords[0]}px`,
-        top: `${coords[1]}px`,
-        border: "1px solid #555",
+        left: props.preview ? 0 : `${coords[0]}px`,
+        top: props.preview ? 0 : `${coords[1]}px`,
+        border:  props.preview ? 0 :"1px solid #555",
+        transform: props.preview ? "scale(0.2, 0.25)" : "scale(1)",
+        transformOrigin: "top left",
       }}
       ref={ref}
       onMouseDown={() => {
@@ -152,13 +161,38 @@ export default function FolderWindow(props) {
           ></div>
           <div className="flex items-start justify-between gap-8 text-white text-sm pr-2">
             <div className="flex items-center -mt-2 -mr-4">
-              <div className={`w-full p-2 px-4 h-full ${isSelected === 1 ? 'bg-[rgba(255,255,255,0.1)]' : 'bg-[rgba(0,0,0,0)]'}`} onMouseOver={() => setIsSelected(1)} onMouseLeave={() => setIsSelected(false)}>
+              <div
+                className={`w-full p-2 px-4 h-full ${
+                  isSelected === 1
+                    ? "bg-[rgba(255,255,255,0.1)]"
+                    : "bg-[rgba(0,0,0,0)]"
+                }`}
+                onMouseOver={() => setIsSelected(1)}
+                onMouseLeave={() => setIsSelected(false)}
+              >
                 <AiOutlineMinus />
               </div>
-              <div className={`w-full p-2 px-4 h-full ${isSelected === 2 ? 'bg-[rgba(255,255,255,0.1)]' : 'bg-[rgba(0,0,0,0)]'}`} onMouseOver={() => setIsSelected(2)} onMouseLeave={() => setIsSelected(false)}>
+              <div
+                className={`w-full p-2 px-4 h-full ${
+                  isSelected === 2
+                    ? "bg-[rgba(255,255,255,0.1)]"
+                    : "bg-[rgba(0,0,0,0)]"
+                }`}
+                onMouseOver={() => setIsSelected(2)}
+                onMouseLeave={() => setIsSelected(false)}
+              >
                 <BiSquare />
               </div>
-              <div className={`w-full p-2 px-4 h-full ${isSelected === 3 ? 'bg-[rgba(255,0,0,0.7)]' : 'bg-[rgba(0,0,0,0)]'}`} onMouseOver={() => setIsSelected(3)} onMouseLeave={() => setIsSelected(false)} onClick={() => dispatch(stopAppProcess(folderID))}>
+              <div
+                className={`w-full p-2 px-4 h-full ${
+                  isSelected === 3
+                    ? "bg-[rgba(255,0,0,0.7)]"
+                    : "bg-[rgba(0,0,0,0)]"
+                }`}
+                onMouseOver={() => setIsSelected(3)}
+                onMouseLeave={() => setIsSelected(false)}
+                onClick={() => dispatch(stopAppProcess(folderID))}
+              >
                 <AiOutlineClose />
               </div>
             </div>
@@ -225,14 +259,16 @@ export default function FolderWindow(props) {
             style={{ border: "0.5px solid #4d4d4d" }}
           >
             <div className="flex items-center text-white p-2">
-              {props.app.isDir ? <img src="/icons/folder.png" width={"20px"} /> : <img src={props.app.icon} width={"20px"} />}
-              
+              {props.app.isDir ? (
+                <img src="/icons/folder.png" width={"20px"} />
+              ) : (
+                <img src={props.app.icon} width={"20px"} />
+              )}
+
               <BiChevronsLeft style={{ fontSize: "14px" }} />
-              <p className="text-xs mx-2">Long text 1</p>
-              <BiChevronRight style={{ fontSize: "12px" }} />
-              <p className="text-xs mx-2">Long text 1</p>
-              <BiChevronRight style={{ fontSize: "12px" }} />
-              <p className="text-xs mx-2">Long text 1</p>
+              <p className="text-xs mx-1">Desktop</p>
+              <BiChevronRight style={{ fontSize: "12px",marginTop:'1px' }} />
+              <p className="text-xs mx-1">{props.app.name}</p>
             </div>
             <div className="flex items-center text-white">
               <BsChevronDown className="mr-2" style={{ fontSize: "14px" }} />
@@ -243,35 +279,39 @@ export default function FolderWindow(props) {
             className="flex items-center justify-between text-white"
             style={{ border: "0.5px solid #4d4d4d", padding: "6px" }}
           >
-            <input className="border-0 outline-none bg-transparent" />
+            <input
+              className="border-0 outline-none bg-transparent text-xs py-1 w-[200px]"
+              placeholder={"Search " + props.app.name}
+            />
             <BiSearch className="mr-2" style={{ fontSize: "20px" }} />
           </div>
         </div>
         <div className="flex justify-start w-full h-full">
-          <table className="flex flex-col items-start text-white border-r-2 border-[#424242] w-[150px] mt-4 h-full">
-            {tempDirFiles.map((file) => {
-              return <FolderRow condensed key={file.name} data={file} />;
+          <table className="flex flex-col items-start text-white border-r-2 border-[#424242] w-[200px] mt-4 h-full">
+            {appDirs.map((app) => {
+              return <FolderRow condensed key={app.id} app={app} />;
             })}
           </table>
           <div className="w-full flex flex-col items-start justify-between text-white gap-4 p-4">
             <table>
-              <thead>
+            
+              <thead className="font-thin">
                 <tr className=" text-left">
-                  <td className="text-sm w-[250px] border-r-2 border-[#424242] pl-2">
+                  <td className="text-xs w-[250px] border-r-2 border-[#424242] pl-4 py-1">
                     Name
                   </td>
-                  <td className="text-sm w-[150px] border-r-2 pl-2 border-[#424242]">
-                    Date Modified
+                  <td className="text-xs w-[150px] border-r-2 pl-2 border-[#424242] py-1">
+                    Date
                   </td>
-                  <td className="text-sm w-[100px] border-r-2 pl-2 border-[#424242]">
+                  <td className="text-xs w-[100px] border-r-2 pl-2 border-[#424242] py-1">
                     Type
                   </td>
-                  <td className="text-sm w-[100px] pl-2">Size</td>
+                  <td className="text-xs w-[100px] pl-2 py-1">Size</td>
                 </tr>
               </thead>
               <tbody>
-                {tempDirFiles.map((file) => {
-                  return <FolderRow key={file.name} data={file} />;
+                {appChildren.map((app) => {
+                  return <FolderRow key={app.id} app={app} />;
                 })}
               </tbody>
             </table>
@@ -280,7 +320,7 @@ export default function FolderWindow(props) {
       </div>
       <div className="absolute flex flex-start items-center text-white w-[1000px] h-[25px] bottom-0 left-0 right-0 bg-[#262626]">
         <span className="mx-4 my-2 pr-2 text-xs border-r border-r-white">
-          31 items
+          8 items
         </span>
       </div>
     </div>
